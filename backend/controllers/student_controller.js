@@ -210,6 +210,25 @@ const studentAttendance = async (req, res) => {
     }
 };
 
+exports.addAttendance = async (req, res) => {
+    try {
+        const newAttendance = new Attendance(req.body);
+        await newAttendance.save();
+        res.status(201).json(newAttendance);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+// Edit existing attendance
+exports.editAttendance = async (req, res) => {
+    try {
+        const updatedAttendance = await Attendance.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.status(200).json(updatedAttendance);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
 const clearAllStudentsAttendanceBySubject = async (req, res) => {
     const subName = req.params.id;
 

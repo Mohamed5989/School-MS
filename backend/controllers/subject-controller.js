@@ -71,6 +71,44 @@ const freeSubjectList = async (req, res) => {
         res.status(500).json(err);
     }
 };
+// backend/controllers/subject-controller.js
+
+
+
+// Add new subject
+exports.addSubject = async (req, res) => {
+    try {
+        const newSubject = new Subject(req.body);
+        await newSubject.save();
+        res.status(201).json(newSubject);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+
+
+const updateSubject = async (req, res) => {
+    const { id } = req.params;
+    const { subName, sessions } = req.body;
+
+    try {
+        const subject = await Subject.findById(id);
+        if (!subject) {
+            return res.status(404).json({ message: 'Subject not found' });
+        }
+
+        subject.subName = subName;
+        subject.sessions = sessions;
+
+        await subject.save();
+        res.status(200).json(subject);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+module.exports = { updateSubject };
 
 const getSubjectDetail = async (req, res) => {
     try {
@@ -158,7 +196,31 @@ const deleteSubjectsByClass = async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
+    const updateSubject = async (req, res) => {
+        const { id } = req.params;
+        const updatedData = req.body;
+    
+        try {
+            const subject = await Subject.findById(id);
+            if (!subject) {
+                return res.status(404).json({ message: 'Subject not found' });
+            }
+    
+            subject.subName = updatedData.subName || subject.subName;
+            subject.sessions = updatedData.sessions || subject.sessions;
+            subject.sclassName = updatedData.sclassName || subject.sclassName;
+    
+            const updatedSubject = await subject.save();
+    
+            res.json(updatedSubject);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    };
+    
+    module.exports = { updateSubject };
+    
 };
 
 
-module.exports = { subjectCreate, freeSubjectList, classSubjects, getSubjectDetail, deleteSubjectsByClass, deleteSubjects, deleteSubject, allSubjects };
+module.exports = { subjectCreate,updateSubject, freeSubjectList, classSubjects, getSubjectDetail, deleteSubjectsByClass, deleteSubjects, deleteSubject, allSubjects };
