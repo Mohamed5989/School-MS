@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Grid, Box, Typography, Paper, Checkbox, FormControlLabel, TextField, CssBaseline, IconButton, InputAdornment, CircularProgress, Backdrop } from '@mui/material';
+import { Grid, Box, Typography, Paper, Checkbox, FormControlLabel, TextField, CssBaseline, IconButton, InputAdornment, CircularProgress, Backdrop } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import bgpic from "../assets/designlogin.jpg"
@@ -73,29 +73,6 @@ const LoginPage = ({ role }) => {
         if (name === 'studentName') setStudentNameError(false);
     };
 
-    const guestModeHandler = () => {
-        const password = "zxc"
-
-        if (role === "Admin") {
-            const email = "yogendra@12"
-            const fields = { email, password }
-            setGuestLoader(true)
-            dispatch(loginUser(fields, role))
-        }
-        else if (role === "Student") {
-            const rollNum = "1"
-            const studentName = "Dipesh Awasthi"
-            const fields = { rollNum, studentName, password }
-            setGuestLoader(true)
-            dispatch(loginUser(fields, role))
-        }
-        else if (role === "Teacher") {
-            const email = "tony@12"
-            const fields = { email, password }
-            setGuestLoader(true)
-            dispatch(loginUser(fields, role))
-        }
-    }
 
     useEffect(() => {
         if (status === 'success' || currentUser !== null) {
@@ -232,26 +209,8 @@ const LoginPage = ({ role }) => {
                                     <CircularProgress size={24} color="inherit" />
                                     : "Login"}
                             </LightPurpleButton>
-                            <Button
-                                fullWidth
-                                onClick={guestModeHandler}
-                                variant="outlined"
-                                sx={{ mt: 2, mb: 3, color: "#7f56da", borderColor: "#7f56da" }}
-                            >
-                                Login as Guest
-                            </Button>
-                            {role === "Admin" &&
-                                <Grid container>
-                                    <Grid>
-                                        Don't have an account?
-                                    </Grid>
-                                    <Grid item sx={{ ml: 2 }}>
-                                        <StyledLink to="/Adminregister">
-                                            Sign up
-                                        </StyledLink>
-                                    </Grid>
-                                </Grid>
-                            }
+                           
+                        
                         </Box>
                     </Box>
                 </Grid>

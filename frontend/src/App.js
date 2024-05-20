@@ -25,7 +25,6 @@ const App = () => {
           <Route path="/Teacherlogin" element={<LoginPage role="Teacher" />} />
 
           <Route path="/Adminregister" element={<AdminRegisterPage />} />
-
           <Route path='*' element={<Navigate to="/" />} />
         </Routes>}
 
