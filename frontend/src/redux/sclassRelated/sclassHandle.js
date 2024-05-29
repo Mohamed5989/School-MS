@@ -12,11 +12,13 @@ import {
     getSubDetailsRequest
 } from './sclassSlice';
 
+const baseURL = "http://localhost:5000";
+
 export const getAllSclasses = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${"http://localhost:5000"}/${address}List/${id}`);
+        const result = await axios.get(`${baseURL}/${address}List/${id}`);
         if (result.data.message) {
             dispatch(getFailedTwo(result.data.message));
         } else {
@@ -31,7 +33,7 @@ export const getClassStudents = (id) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${"http://localhost:5000"}/Sclass/Students/${id}`);
+        const result = await axios.get(`${baseURL}/Sclass/Students/${id}`);
         if (result.data.message) {
             dispatch(getFailedTwo(result.data.message));
         } else {
@@ -46,7 +48,7 @@ export const getClassDetails = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${"http://localhost:5000"}/${address}/${id}`);
+        const result = await axios.get(`${baseURL}/${address}/${id}`);
         if (result.data) {
             dispatch(detailsSuccess(result.data));
         }
@@ -59,7 +61,7 @@ export const getSubjectList = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${"http://localhost:5000"}/${address}/${id}`);
+        const result = await axios.get(`${baseURL}/${address}/${id}`);
         if (result.data.message) {
             dispatch(getFailed(result.data.message));
         } else {
@@ -74,7 +76,7 @@ export const getTeacherFreeClassSubjects = (id) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${"http://localhost:5000"}/FreeSubjectList/${id}`);
+        const result = await axios.get(`${baseURL}/FreeSubjectList/${id}`);
         if (result.data.message) {
             dispatch(getFailed(result.data.message));
         } else {
@@ -89,7 +91,7 @@ export const getSubjectDetails = (id, address) => async (dispatch) => {
     dispatch(getSubDetailsRequest());
 
     try {
-        const result = await axios.get(`${"http://localhost:5000"}/${address}/${id}`);
+        const result = await axios.get(`${baseURL}/${address}/${id}`);
         if (result.data) {
             dispatch(getSubDetailsSuccess(result.data));
         }
@@ -98,15 +100,11 @@ export const getSubjectDetails = (id, address) => async (dispatch) => {
     }
 }
 
-
-
-export const updateSubject = (id, updatedData) => async (dispatch) => {
+export const updateSubject = (subjectData) => async (dispatch) => {
     try {
-        const response = await axios.put(`/api/subjects/${id}`, updatedData);
+        const response = await axios.put(`${baseURL}/subjects/${subjectData.id}`, subjectData);
         return response.data;
     } catch (error) {
         throw error;
     }
 };
-
-
